@@ -1,0 +1,16 @@
+@import "./variables.module.scss";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: $lightmode-bg;
+  font-family: $main-font;
+}
+
+:root {
+  font-size: 62.5%;
+}
