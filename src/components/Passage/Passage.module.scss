@@ -1,0 +1,12 @@
+@import "../../variables.module.scss";
+
+.passage-wrapper {
+  margin: 5rem 40rem 0 40rem;
+
+  .word {
+    display: inline;
+    margin: 0.25em;
+    font-size: 2rem;
+    color: $lightmode-unwritten;
+  }
+}
