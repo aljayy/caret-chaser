@@ -1,10 +1,11 @@
-import logo from "./assets/cclogo.svg";
+import Header from "./components/Header/Header";
+import classes from "./App.module.scss";
 
 function App() {
   return (
-    <div>
-      <img src={logo} alt="Logo" />
-    </div>
+    <>
+      <Header />
+    </>
   );
 }
 
