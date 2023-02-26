@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import classes from "./Passage.module.scss";
 
 function Passage() {
@@ -10,35 +10,51 @@ function Passage() {
   // // They will all have a default class. e.g. Light mode text will have a class that will give the letters a color of #99947F (plus all default styling). ✅
   // Approach to styling current letter
   // // Have a hidden input where the users input will be compared to the passage. ✅
-  // // If keyDownEvent === arr[letterIndex], letter class coloring = #000000 📌
-  // // Else if keyDownEvent !== arr[letterIndex], letter class coloring = #BA3333 📌
+  // // If keyDownEvent === arr[letterIndex], letter class coloring = #000000 ✅
+  // // Else if keyDownEvent !== arr[letterIndex], letter class coloring = #BA3333 ✅
   // Approach to implementing test
-  // // // Have a wordIndex state that holds the index of the current word I'm in. Increase the counter by 1 when the spacebar is clicked wordArr[0] => ["e", "a", "s", "y"] 📌
+  // // // Have a wordIndex state that holds the index of the current word I'm in. Increase the counter by 1 when the spacebar is clicked && letterIndex !== 0. wordArr[0] => ["e", "a", "s", "y"] 📌
   // // // I will also need a letterIndex state that holds the current letter I'm comparing to. Start at 0, increase with a keyDownEvent that isn't a space and reset to 0 if event is a space. arr[0] => "e". 📌
 
   const [wordIndex, setWordIndex] = useState(0);
   const [letterIndex, setLetterIndex] = useState(0);
+  const [passageArray, setPassageArray] = useState([]);
 
-  let passage =
-    "easy stop population including society common like".toLowerCase();
-  let passageArray = passage.split(" ").map((word) => {
-    return word.split("").map((letter) => {
-      return { letter: letter, correct: null };
-    });
-  });
+  useEffect(() => {
+    let passage = "easy stop population including society common like"
+      .toLowerCase()
+      .split(" ")
+      .map((word) => {
+        return word.split("").map((letter) => {
+          return { letter: letter, correct: null, incorrect: null };
+        });
+      });
 
-  passageArray[0][0].correct = true;
-
-  console.log(passageArray);
+    setPassageArray(passage);
+  }, []);
 
   function checkLetter(e) {
-    if (e.key === passageArray[wordIndex][letterIndex]) {
-      console.log("MATCH");
+    let letterRegex = /^[a-zA-Z]$/;
+    if (letterRegex.test(e.key)) {
+      let currentLetter = passageArray[wordIndex][letterIndex].letter;
+      if (e.key === currentLetter) {
+        setPassageArray((prev) => {
+          let updated = [...prev];
+          updated[wordIndex][letterIndex].correct = true;
+          return updated;
+        });
+      } else if (e.key !== currentLetter) {
+        setPassageArray((prev) => {
+          let updated = [...prev];
+          updated[wordIndex][letterIndex].incorrect = true;
+          return updated;
+        });
+      }
       setLetterIndex((prev) => prev + 1);
+      // if (e.key === " " && letterIndex !== 0) {
+      //   setWordIndex((prev) => prev + 1);
+      // }
     }
-    // if (e.key === " " && letterIndex !== 0) {
-    //   setWordIndex((prev) => prev + 1);
-    // }
   }
 
   return (
@@ -49,7 +65,11 @@ function Passage() {
           <div className={classes.word}>
             {word.map((current) => {
               return (
-                <span className={current.correct ? classes.correct : ""}>
+                <span
+                  className={`${current.correct ? classes.correct : ""} ${
+                    current.incorrect ? classes.incorrect : ""
+                  }`}
+                >
                   {current.letter}
                 </span>
               );
