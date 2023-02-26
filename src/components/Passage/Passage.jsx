@@ -1,3 +1,4 @@
+import { useState } from "react";
 import classes from "./Passage.module.scss";
 
 function Passage() {
@@ -6,27 +7,52 @@ function Passage() {
   // // I need to first of all break each word into it's own array. passage.split(" ") => ["easy", "stop"]; ✅
   // // For each word, split all the letters. => [["e", "a", "s", "y"], ["s", "t", "o", "p"]] => wordArr; ✅
   // // Loop through each element of this array of arrays. And display all the letters together as words. ✅
-  // // They will all have a default class. e.g. Light mode text will have a class that will give the letters a color of #99947F (plus all default styling). 📌
-  // Approach to implementing test
-  // // Have a hidden input where the users input will be compared to the passage. 📌
-  // // // Have a wordIndex state that holds the index of the current word I'm in. Increase the counter by 1 when the spacebar is clicked wordArr[0] => ["e", "a", "s", "y"] 📌
-  // // // I will also need a letterIndex state that holds the current letter I'm comparing to. Start at 0, increase with a keyDownEvent that isn't a space and reset to 0 even is a space. letterArr[0] => "e". 📌
+  // // They will all have a default class. e.g. Light mode text will have a class that will give the letters a color of #99947F (plus all default styling). ✅
   // Approach to styling current letter
-  // // If keyDownEvent === letterArr[letterIndex], letter class coloring = #000000 📌
-  // // Else if keyDownEvent !== letterArr[letterIndex], letter class coloring = #BA3333 📌
+  // // Have a hidden input where the users input will be compared to the passage. ✅
+  // // If keyDownEvent === arr[letterIndex], letter class coloring = #000000 📌
+  // // Else if keyDownEvent !== arr[letterIndex], letter class coloring = #BA3333 📌
+  // Approach to implementing test
+  // // // Have a wordIndex state that holds the index of the current word I'm in. Increase the counter by 1 when the spacebar is clicked wordArr[0] => ["e", "a", "s", "y"] 📌
+  // // // I will also need a letterIndex state that holds the current letter I'm comparing to. Start at 0, increase with a keyDownEvent that isn't a space and reset to 0 if event is a space. arr[0] => "e". 📌
 
-  let passage = "easy stop population including society common".toLowerCase();
+  const [wordIndex, setWordIndex] = useState(0);
+  const [letterIndex, setLetterIndex] = useState(0);
+
+  let passage =
+    "easy stop population including society common like".toLowerCase();
   let passageArray = passage.split(" ").map((word) => {
-    return word.split("");
+    return word.split("").map((letter) => {
+      return { letter: letter, correct: null };
+    });
   });
+
+  passageArray[0][0].correct = true;
+
+  console.log(passageArray);
+
+  function checkLetter(e) {
+    if (e.key === passageArray[wordIndex][letterIndex]) {
+      console.log("MATCH");
+      setLetterIndex((prev) => prev + 1);
+    }
+    // if (e.key === " " && letterIndex !== 0) {
+    //   setWordIndex((prev) => prev + 1);
+    // }
+  }
 
   return (
     <div className={classes["passage-wrapper"]}>
+      <input className={classes["test-input"]} onKeyDown={checkLetter} />
       {passageArray.map((word) => {
         return (
           <div className={classes.word}>
-            {word.map((letter) => {
-              return <span>{letter}</span>;
+            {word.map((current) => {
+              return (
+                <span className={current.correct ? classes.correct : ""}>
+                  {current.letter}
+                </span>
+              );
             })}
           </div>
         );
