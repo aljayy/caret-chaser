@@ -18,7 +18,12 @@ function Passage() {
   // // Increase letterCounter
   // // // I will also need a letterIndex state that holds the current letter I'm comparing to. Start at 0, increase with a keyDownEvent that isn't a space and reset to 0 if event is a space. arr[0] => "e". 📌
   // // Implementing backspace
-  // // // If letterIndex is greater than 0, decrease letterIndex by 1. Set correct/incorrect keys to null.
+  // // // If letterIndex is greater than 0, decrease letterIndex by 1. Set correct/incorrect keys to null. 📌
+  // // Implementing spacing
+  // // // If user has not typed at least one letter, no action is taken. wordIndex and letterIndex do not update. return; ✅
+  // // // If user has typed at least one letter and spacebar has been pressed, render the rest of the word as incorrect. ✅
+  // // // If user has typed all the letters of the current words and spacebar is pressed, then all letters should render as correct. ✅
+  // // // // For both of these cases, increase wordIndex + 1, reset letterIndex to 0. ✅
 
   const [wordIndex, setWordIndex] = useState(0);
   const [letterIndex, setLetterIndex] = useState(0);
@@ -36,6 +41,8 @@ function Passage() {
 
     setPassageArray(passage);
   }, []);
+
+  console.log(passageArray);
 
   function checkLetter(e) {
     let letterRegex = /^[a-zA-Z]$/;
@@ -55,6 +62,23 @@ function Passage() {
         });
       }
       setLetterIndex((prev) => prev + 1);
+    } else if (e.key === " ") {
+      if (letterIndex === 0) return;
+
+      let currentWord = passageArray[wordIndex];
+
+      if (letterIndex < currentWord.length) {
+        for (let i = letterIndex; i < currentWord.length; i++) {
+          setPassageArray((prev) => {
+            let updated = [...prev];
+            updated[wordIndex][i].incorrect = true;
+            return updated;
+          });
+        }
+      }
+
+      setWordIndex((count) => count + 1);
+      setLetterIndex(0);
     } else if (e.key === "Backspace" && letterIndex > 0) {
       setLetterIndex((prev) => prev - 1);
       setPassageArray((prev) => {
