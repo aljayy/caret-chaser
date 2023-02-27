@@ -1,0 +1,33 @@
+@import "../../../variables.module.scss";
+
+.mobile-settings {
+  // Remove default button styling
+  border: none;
+  outline: none;
+  font: inherit;
+  background: transparent;
+  //
+  background-color: $lightmode-secondary-bg;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  height: 4rem;
+  width: 33rem;
+  margin: 0 3rem 6rem 3rem;
+
+  .icon {
+    height: 1.8rem;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    color: $lightmode-misc-text;
+  }
+}
