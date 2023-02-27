@@ -13,8 +13,12 @@ function Passage() {
   // // If keyDownEvent === arr[letterIndex], letter class coloring = #000000 ✅
   // // Else if keyDownEvent !== arr[letterIndex], letter class coloring = #BA3333 ✅
   // Approach to implementing test
+  // // Increase wordCounter
   // // // Have a wordIndex state that holds the index of the current word I'm in. Increase the counter by 1 when the spacebar is clicked && letterIndex !== 0. wordArr[0] => ["e", "a", "s", "y"] 📌
+  // // Increase letterCounter
   // // // I will also need a letterIndex state that holds the current letter I'm comparing to. Start at 0, increase with a keyDownEvent that isn't a space and reset to 0 if event is a space. arr[0] => "e". 📌
+  // // Implementing backspace
+  // // // If letterIndex is greater than 0, decrease letterIndex by 1. Set correct/incorrect keys to null.
 
   const [wordIndex, setWordIndex] = useState(0);
   const [letterIndex, setLetterIndex] = useState(0);
@@ -51,9 +55,14 @@ function Passage() {
         });
       }
       setLetterIndex((prev) => prev + 1);
-      // if (e.key === " " && letterIndex !== 0) {
-      //   setWordIndex((prev) => prev + 1);
-      // }
+    } else if (e.key === "Backspace" && letterIndex > 0) {
+      setLetterIndex((prev) => prev - 1);
+      setPassageArray((prev) => {
+        let updated = [...prev];
+        updated[wordIndex][letterIndex - 1].correct = null;
+        updated[wordIndex][letterIndex - 1].incorrect = null;
+        return updated;
+      });
     }
   }
 
