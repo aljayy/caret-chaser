@@ -1,34 +1,12 @@
 @import "../../variables.module.scss";
 
 .passage-wrapper {
-  padding: 0 3rem;
-  text-align: left;
-
-  .test-input {
-    background-color: transparent;
-    position: absolute;
-    // FOR TESTING
-    top: 0;
-    left: 0;
-    // END TESTING
-
-    &:focus {
-      outline: none;
-    }
-  }
+  margin: 5rem 40rem 0 40rem;
 
   .word {
-    display: inline-block;
+    display: inline;
     margin: 0.25em;
     font-size: 2rem;
-    color: $lightmode-misc-text;
-  }
-
-  .correct {
-    color: $lightmode-correct;
-  }
-
-  .incorrect {
-    color: $lightmode-incorrect;
+    color: $lightmode-unwritten;
   }
 }
