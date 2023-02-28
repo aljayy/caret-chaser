@@ -1,19 +1,22 @@
 @import "../../variables.module.scss";
 
 .passage-wrapper {
-  padding: 0 3rem;
+  margin: 0 3rem;
   text-align: left;
+  position: relative;
 
   .test-input {
     background-color: transparent;
     position: absolute;
-    // FOR TESTING
     top: 0;
     left: 0;
-    // END TESTING
+    height: 3rem;
+    border: none;
+    color: transparent;
 
     &:focus {
       outline: none;
+      caret-color: none;
     }
   }
 
