@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Caret from "../Caret/Caret";
 import classes from "./Passage.module.scss";
 
@@ -6,11 +6,12 @@ function Passage() {
   const [wordIndex, setWordIndex] = useState(0);
   const [letterIndex, setLetterIndex] = useState(0);
   const [passageArray, setPassageArray] = useState([]);
-  const [caretX, setCaretX] = useState(0.4);
-  // Caret component implementation
-  // // This component is going to be a div with no content. Just some width, height, and coloring added to give the appearance of a caret.
-  // // // Currently positioned absolute with parent "passage-wrapper" positioned relative. With a starting top of 0.8rem and left 0.4rem
-  // // // After some light testing, the caret's left position is going to have to move 1.2rem per letter typed. 1rem when space bar is clicked.
+  const [caretLeft, setCaretLeft] = useState(0.4);
+  const [caretTop, setCaretTop] = useState(0.8);
+  const passageRef = useRef();
+  // // Shifting passage position 📌
+  // // // The only time the user will be typing on the first line is in the beginning, after the currentWord shifts onto the second line that's where it will stay for the duration of the test. 📌
+  // // // So when user completes the last word on the second line and shifts to the next one. Move the passage up so now the second line is the first line, the third is the second, and the fourth is the third. (I want to only show 3 lines at a time). 📌
 
   useEffect(() => {
     return async () => {
@@ -50,7 +51,7 @@ function Passage() {
         });
       }
       setLetterIndex((prev) => prev + 1);
-      setCaretX((prev) => prev + 1.2);
+      setCaretLeft((prev) => prev + 1.2);
     } else if (e.key === " ") {
       if (letterIndex === 0) return;
 
@@ -66,9 +67,13 @@ function Passage() {
         }
       }
 
+      if (passageRef.current.childNodes[wordIndex + 1].offsetTop > 5) {
+        setCaretLeft(0.4);
+        setCaretTop(4.6);
+      } else setCaretLeft((prev) => prev + 1);
+
       setWordIndex((count) => count + 1);
       setLetterIndex(0);
-      setCaretX((prev) => prev + 1);
     } else if (e.key === "Backspace" && letterIndex > 0) {
       setLetterIndex((prev) => prev - 1);
       setPassageArray((prev) => {
@@ -77,31 +82,33 @@ function Passage() {
         updated[wordIndex][letterIndex - 1].incorrect = null;
         return updated;
       });
-      setCaretX((prev) => prev - 1.2);
+      setCaretLeft((prev) => prev - 1.2);
     }
   }
 
   return (
-    <div className={classes["passage-wrapper"]}>
-      <Caret caretX={caretX} />
+    <div className={classes["test-wrapper"]}>
+      <Caret caretLeft={caretLeft} caretTop={caretTop} />
       <input className={classes["test-input"]} onKeyDown={checkLetter} />
-      {passageArray.map((word) => {
-        return (
-          <div className={classes.word}>
-            {word.map((current) => {
-              return (
-                <span
-                  className={`${current.correct ? classes.correct : ""} ${
-                    current.incorrect ? classes.incorrect : ""
-                  }`}
-                >
-                  {current.letter}
-                </span>
-              );
-            })}
-          </div>
-        );
-      })}
+      <div ref={passageRef} className={classes["passage-wrapper"]}>
+        {passageArray.map((word) => {
+          return (
+            <div className={classes.word}>
+              {word.map((current) => {
+                return (
+                  <span
+                    className={`${current.correct ? classes.correct : ""} ${
+                      current.incorrect ? classes.incorrect : ""
+                    }`}
+                  >
+                    {current.letter}
+                  </span>
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
