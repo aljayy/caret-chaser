@@ -1,6 +1,6 @@
 @import "../../variables.module.scss";
 
-.passage-wrapper {
+.test-wrapper {
   margin: 0 3rem;
   text-align: left;
   position: relative;
@@ -20,11 +20,13 @@
     }
   }
 
-  .word {
-    display: inline-block;
-    margin: 0.25em;
-    font-size: 2rem;
-    color: $lightmode-misc-text;
+  .passage-wrapper {
+    .word {
+      display: inline-block;
+      margin: 0.25em;
+      font-size: 2rem;
+      color: $lightmode-misc-text;
+    }
   }
 
   .correct {
