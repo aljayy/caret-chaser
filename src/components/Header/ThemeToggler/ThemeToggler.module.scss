@@ -1,0 +1,17 @@
+.toggler {
+  // Remove default button styling
+  border: none;
+  outline: none;
+  font: inherit;
+  background: transparent;
+  //
+  border: 1px solid #080909;
+  height: 3rem;
+  width: 7rem;
+  border-radius: 20rem;
+
+  div {
+    display: flex;
+    justify-content: center;
+  }
+}
