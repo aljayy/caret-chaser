@@ -4,6 +4,8 @@
   margin: 0 3rem;
   text-align: left;
   position: relative;
+  height: 13.2rem;
+  overflow: hidden;
 
   .test-input {
     background-color: transparent;
@@ -13,6 +15,7 @@
     height: 3rem;
     border: none;
     color: transparent;
+    z-index: 10;
 
     &:focus {
       outline: none;
@@ -21,6 +24,8 @@
   }
 
   .passage-wrapper {
+    position: relative;
+
     .word {
       display: inline-block;
       margin: 0.25em;
