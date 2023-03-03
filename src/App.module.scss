@@ -6,11 +6,20 @@
   padding: 0;
 }
 
+:root {
+  font-size: 62.5%;
+}
+
 body {
-  background-color: $lightmode-bg;
   font-family: $main-font;
 }
 
-:root {
-  font-size: 62.5%;
+.light {
+  background-color: $lightmode-bg;
+  height: 100vh;
+}
+
+.dark {
+  background-color: $darkmode-bg;
+  height: 100vh;
 }
