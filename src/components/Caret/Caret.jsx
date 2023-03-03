@@ -5,7 +5,7 @@ function Caret({ caretLeft, caretTop }) {
     <div
       className={classes.caret}
       style={{ left: `${caretLeft}rem`, top: `${caretTop}rem` }}
-    ></div>
+    />
   );
 }
 
