@@ -7,7 +7,6 @@
   font: inherit;
   background: transparent;
   //
-  background-color: $lightmode-secondary-bg;
   border-radius: 1rem;
   display: flex;
   align-items: center;
@@ -28,6 +27,21 @@
 
   h2 {
     font-size: 1.8rem;
+  }
+}
+
+.light {
+  background-color: $lightmode-secondary-bg;
+
+  h2 {
     color: $lightmode-misc-text;
+  }
+}
+
+.dark {
+  background-color: $darkmode-secondary-bg;
+
+  h2 {
+    color: $darkmode-correct;
   }
 }
