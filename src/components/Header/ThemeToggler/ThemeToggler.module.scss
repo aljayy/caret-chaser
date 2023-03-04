@@ -1,3 +1,5 @@
+@import "../../../variables.module.scss";
+
 .toggler {
   // Remove default button styling
   border: none;
@@ -5,7 +7,6 @@
   font: inherit;
   background: transparent;
   //
-  border: 1px solid #080909;
   height: 3rem;
   width: 7rem;
   border-radius: 20rem;
@@ -14,4 +15,12 @@
     display: flex;
     justify-content: center;
   }
+}
+
+.light {
+  border: 1px solid $lightmode-correct;
+}
+
+.dark {
+  border: 1px solid $darkmode-correct;
 }
