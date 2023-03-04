@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import Caret from "../Caret/Caret";
 import classes from "./Passage.module.scss";
 
@@ -108,7 +108,11 @@ function Passage() {
   return (
     <div className={classes["test-wrapper"]}>
       <Caret caretLeft={caretLeft} caretTop={caretTop} />
-      <input className={classes["test-input"]} onKeyDown={checkLetter} />
+      <input
+        className={classes["test-input"]}
+        onKeyDown={checkLetter}
+        spellCheck={false}
+      />
       <div
         ref={passageRef}
         className={classes["passage-wrapper"]}
