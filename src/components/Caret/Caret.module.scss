@@ -3,6 +3,13 @@
 .caret {
   width: 0.2rem;
   height: 2.4rem;
-  background-color: $lightmode-correct;
   position: absolute;
+}
+
+.light {
+  background-color: $lightmode-correct;
+}
+
+.dark {
+  background-color: $darkmode-incorrect;
 }
