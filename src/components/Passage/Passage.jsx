@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useContext } from "react";
+import ThemeCtx from "../../context/themectx";
 import Caret from "../Caret/Caret";
 import classes from "./Passage.module.scss";
 
@@ -10,7 +11,10 @@ function Passage() {
   const [caretLeft, setCaretLeft] = useState(0.5);
   const [caretTop, setCaretTop] = useState(1);
   const [currentPosition, setCurrentPosition] = useState(null);
+  const themeCtx = useContext(ThemeCtx);
   const passageRef = useRef();
+
+  const theme = themeCtx.theme === "light" ? classes.light : classes.dark;
 
   useEffect(() => {
     return async () => {
@@ -106,7 +110,7 @@ function Passage() {
   }
 
   return (
-    <div className={classes["test-wrapper"]}>
+    <div className={`${classes["test-wrapper"]} ${theme}`}>
       <Caret caretLeft={caretLeft} caretTop={caretTop} />
       <input
         className={classes["test-input"]}
