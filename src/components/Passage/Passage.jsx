@@ -28,15 +28,16 @@ function Passage() {
         className={classes["passage-wrapper"]}
         style={{ top: `${passageTop}rem` }}
       >
-        {passageArray.map((word) => {
+        {passageArray.map((word, index) => {
           return (
-            <div className={classes.word}>
-              {word.map((current) => {
+            <div className={classes.word} key={`${word + index}`}>
+              {word.map((current, index) => {
                 return (
                   <span
                     className={`${current.correct ? classes.correct : ""} ${
                       current.incorrect ? classes.incorrect : ""
                     }`}
+                    key={`${current + index}`}
                   >
                     {current.letter}
                   </span>
