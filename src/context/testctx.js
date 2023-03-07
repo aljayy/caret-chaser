@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 
 const TestCtx = React.createContext({
   passageArray: [],
@@ -20,7 +20,7 @@ export function TestCtxProvider({ children }) {
   const [currentPosition, setCurrentPosition] = useState(null);
   const passageRef = useRef(null);
 
-  async function retrievePassage() {
+  const retrievePassage = useCallback(async () => {
     let response = await fetch(
       `https://caret-catcher-default-rtdb.firebaseio.com/passage0.json`
     );
@@ -37,7 +37,7 @@ export function TestCtxProvider({ children }) {
       });
 
     setPassageArray(passage);
-  }
+  }, []);
 
   function checkLetter(e) {
     if (currentPosition === null) {
