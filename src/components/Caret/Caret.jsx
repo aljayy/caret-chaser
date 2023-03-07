@@ -1,9 +1,11 @@
 import { useContext } from "react";
+import TestCtx from "../../context/testctx";
 import ThemeCtx from "../../context/themectx";
 import classes from "./Caret.module.scss";
 
-function Caret({ caretLeft, caretTop }) {
+function Caret() {
   const themeCtx = useContext(ThemeCtx);
+  const { caretLeft, caretTop } = useContext(TestCtx);
 
   const theme = themeCtx.theme === "light" ? classes.light : classes.dark;
 
