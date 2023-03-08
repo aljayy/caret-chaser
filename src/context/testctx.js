@@ -5,19 +5,22 @@ const TestCtx = React.createContext({
   passageTop: 0,
   caretLeft: 0.5,
   caretTop: 1,
+  isTyping: false,
   passageRef: "",
   checkLetter: () => {},
   retrievePassage: () => {},
 });
 
 export function TestCtxProvider({ children }) {
-  const [wordIndex, setWordIndex] = useState(0);
-  const [letterIndex, setLetterIndex] = useState(0);
-  const [passageArray, setPassageArray] = useState([]);
-  const [passageTop, setPassageTop] = useState(0);
   const [caretLeft, setCaretLeft] = useState(0.5);
   const [caretTop, setCaretTop] = useState(1);
   const [currentPosition, setCurrentPosition] = useState(null);
+  const [letterIndex, setLetterIndex] = useState(0);
+  const [passageArray, setPassageArray] = useState([]);
+  const [passageTop, setPassageTop] = useState(0);
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
+  const [testData, setTestData] = useState([]);
   const passageRef = useRef(null);
 
   const retrievePassage = useCallback(async () => {
@@ -40,6 +43,10 @@ export function TestCtxProvider({ children }) {
   }, []);
 
   function checkLetter(e) {
+    if (!isTyping) {
+      setIsTyping(true);
+    }
+
     if (currentPosition === null) {
       setCurrentPosition(passageRef.current.childNodes[wordIndex].offsetTop);
     }
@@ -112,6 +119,36 @@ export function TestCtxProvider({ children }) {
     }
   }
 
+  function calculateWPM(seconds) {
+    let spaces =
+      passageArray
+        .map((word) => {
+          return word.filter((letter) => {
+            if (letter.incorrect || letter.correct) return true;
+            else return false;
+          });
+        })
+        .filter((arr) => {
+          if (arr.length < 1) return false;
+          return true;
+        }).length - 1;
+
+    let chars = passageArray.flatMap((word) => {
+      return word.filter((letter) => {
+        if (letter.incorrect || letter.correct) return true;
+        else return false;
+      });
+    }).length;
+
+    let totalChars = chars + spaces;
+
+    let currentWPM = totalChars / 5 / (seconds / 60);
+
+    setTestData((prev) => {
+      return [...prev, { seconds: seconds, wpm: currentWPM }];
+    });
+  }
+
   return (
     <TestCtx.Provider
       value={{
@@ -121,7 +158,9 @@ export function TestCtxProvider({ children }) {
         passageArray,
         passageRef,
         passageTop,
+        isTyping,
         retrievePassage,
+        calculateWPM,
       }}
     >
       {children}
