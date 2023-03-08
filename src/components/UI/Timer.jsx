@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import TestCtx from "../../context/testctx";
 import classes from "./Timer.module.scss";
 
 function Timer() {
   const [timer, setTimer] = useState(30);
+  const [seconds, setSeconds] = useState(1);
+  const { isTyping, calculateWPM } = useContext(TestCtx);
 
   useEffect(() => {
-    if (timer > 0) {
+    if (timer > 0 && isTyping) {
       var countDown = setTimeout(() => {
         setTimer((prev) => prev - 1);
+        setSeconds((prev) => prev + 1);
+        calculateWPM(seconds);
       }, 1000);
     }
 
     return () => {
       clearTimeout(countDown);
     };
-  }, [timer]);
+  }, [timer, isTyping]);
 
   return (
     <div className={classes.timer}>
