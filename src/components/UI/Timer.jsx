@@ -5,14 +5,14 @@ import classes from "./Timer.module.scss";
 function Timer() {
   const [timer, setTimer] = useState(30);
   const [seconds, setSeconds] = useState(1);
-  const { isTyping, calculateWPM } = useContext(TestCtx);
+  const { isTyping, calculateNetWPM } = useContext(TestCtx);
 
   useEffect(() => {
     if (timer > 0 && isTyping) {
       var countDown = setTimeout(() => {
         setTimer((prev) => prev - 1);
         setSeconds((prev) => prev + 1);
-        calculateWPM(seconds);
+        calculateNetWPM(seconds);
       }, 1000);
     }
 

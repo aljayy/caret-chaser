@@ -20,7 +20,7 @@ export function TestCtxProvider({ children }) {
   const [passageTop, setPassageTop] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
-  const [testData, setTestData] = useState([]);
+  const [netWpm, setNetWpm] = useState([]);
   const passageRef = useRef(null);
 
   const retrievePassage = useCallback(async () => {
@@ -119,7 +119,7 @@ export function TestCtxProvider({ children }) {
     }
   }
 
-  function calculateWPM(seconds) {
+  function calculateNetWPM(seconds) {
     let spaces =
       passageArray
         .map((word) => {
@@ -133,18 +133,25 @@ export function TestCtxProvider({ children }) {
           return true;
         }).length - 1;
 
-    let chars = passageArray.flatMap((word) => {
+    let correctChars = passageArray.flatMap((word) => {
       return word.filter((letter) => {
-        if (letter.incorrect || letter.correct) return true;
+        if (letter.correct) return true;
         else return false;
       });
     }).length;
 
-    let totalChars = chars + spaces;
+    let incorrectChars = passageArray.flatMap((word) => {
+      return word.filter((letter) => {
+        if (letter.incorrect) return true;
+        else return false;
+      });
+    }).length;
 
-    let currentWPM = totalChars / 5 / (seconds / 60);
+    let totalChars = correctChars + incorrectChars + spaces;
 
-    setTestData((prev) => {
+    let currentWPM = (totalChars / 5 - incorrectChars) / (seconds / 60);
+
+    setNetWpm((prev) => {
       return [...prev, { seconds: seconds, wpm: currentWPM }];
     });
   }
@@ -160,7 +167,7 @@ export function TestCtxProvider({ children }) {
         passageTop,
         isTyping,
         retrievePassage,
-        calculateWPM,
+        calculateNetWPM,
       }}
     >
       {children}
