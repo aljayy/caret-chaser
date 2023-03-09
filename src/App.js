@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Passage from "./components/Passage/Passage";
 import ThemeCtx from "./context/themectx";
@@ -12,7 +13,11 @@ function App() {
   return (
     <div className={theme}>
       <Header />
-      <Passage />
+      <Routes>
+        <Route path="/" element={<Navigate replace to={"/test"} />} />
+        <Route path="/test" element={<Passage />} />
+        <Route />
+      </Routes>
     </div>
   );
 }
