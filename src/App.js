@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Passage from "./components/Passage/Passage";
+import Results from "./pages/Results/Results";
 import ThemeCtx from "./context/themectx";
 import classes from "./App.module.scss";
 
@@ -16,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate replace to={"/test"} />} />
         <Route path="/test" element={<Passage />} />
-        <Route />
+        <Route path="/results" element={<Results />}/>
       </Routes>
     </div>
   );
