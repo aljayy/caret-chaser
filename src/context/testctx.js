@@ -6,7 +6,10 @@ const TestCtx = React.createContext({
   caretLeft: 0.5,
   caretTop: 1,
   isTyping: false,
+  netWpm: "",
   passageRef: "",
+  secondaryResults: [],
+  calculateResults: () => {},
   checkLetter: () => {},
   retrievePassage: () => {},
 });
@@ -21,6 +24,7 @@ export function TestCtxProvider({ children }) {
   const [wordIndex, setWordIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [netWpm, setNetWpm] = useState([]);
+  const [secondaryResults, setSecondaryResults] = useState([]);
   const passageRef = useRef(null);
 
   const retrievePassage = useCallback(async () => {
@@ -149,25 +153,76 @@ export function TestCtxProvider({ children }) {
 
     let totalChars = correctChars + incorrectChars + spaces;
 
-    let currentWPM = (totalChars / 5 - incorrectChars) / (seconds / 60);
+    let currentWPM = Math.round(
+      (totalChars / 5 - incorrectChars) / (seconds / 60)
+    );
 
     setNetWpm((prev) => {
       return [...prev, { seconds: seconds, wpm: currentWPM }];
     });
   }
 
+  const calculateResults = useCallback(() => {
+    let correctChars =
+      passageArray.flatMap((word) => {
+        return word.filter((letter) => {
+          if (letter.correct) return true;
+          else return false;
+        });
+      }).length +
+      passageArray
+        .map((word) => {
+          return word.filter((letter) => {
+            if (letter.incorrect || letter.correct) return true;
+            else return false;
+          });
+        })
+        .filter((arr) => {
+          if (arr.length < 1) return false;
+          return true;
+        }).length -
+      1;
+
+    let incorrectChars = passageArray.flatMap((word) => {
+      return word.filter((letter) => {
+        if (letter.incorrect) return true;
+        else return false;
+      });
+    }).length;
+
+    let totalChars = correctChars + incorrectChars;
+    let accuracy = Math.round((correctChars / totalChars) * 100);
+    let gwpm = Math.round(totalChars / 5 / (30 / 60));
+    let charsData = {
+      incorrect: incorrectChars,
+      correct: correctChars,
+      total: totalChars,
+    };
+
+    setSecondaryResults([
+      {
+        accuracy,
+        gwpm,
+        charsData,
+      },
+    ]);
+  }, [passageArray]);
+
   return (
     <TestCtx.Provider
       value={{
-        checkLetter,
+        calculateNetWPM,
+        calculateResults,
         caretLeft,
         caretTop,
+        checkLetter,
+        isTyping,
+        netWpm,
         passageArray,
         passageRef,
         passageTop,
-        isTyping,
         retrievePassage,
-        calculateNetWPM,
+        secondaryResults,
       }}
     >
       {children}
