@@ -12,12 +12,12 @@ function App() {
   const theme = themeCtx.theme === "light" ? classes.light : classes.dark;
 
   return (
-    <div className={theme}>
+    <div className={`${classes.wrapper} ${theme}`}>
       <Header />
       <Routes>
         <Route path="/" element={<Navigate replace to={"/test"} />} />
         <Route path="/test" element={<Passage />} />
-        <Route path="/results" element={<Results />}/>
+        <Route path="/results" element={<Results />} />
       </Routes>
     </div>
   );

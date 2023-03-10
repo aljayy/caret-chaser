@@ -14,6 +14,10 @@ body {
   font-family: $main-font;
 }
 
+.wrapper {
+  padding: 0 3rem;
+}
+
 .light {
   background-color: $lightmode-bg;
   height: 100vh;
