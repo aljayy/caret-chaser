@@ -6,6 +6,7 @@ const TestCtx = React.createContext({
   caretLeft: 0.5,
   caretTop: 1,
   isTyping: false,
+  netWpm: [],
   passageRef: "",
   checkLetter: () => {},
   retrievePassage: () => {},
@@ -168,6 +169,7 @@ export function TestCtxProvider({ children }) {
         isTyping,
         retrievePassage,
         calculateNetWPM,
+        netWpm,
       }}
     >
       {children}
