@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import TestCtx from "../../context/testctx";
+import ThemeCtx from "../../context/themectx";
 import Loader from "../../components/UI/Loader";
 import classes from "./Results.module.scss";
 
@@ -14,6 +15,9 @@ function Results() {
   // console.log(secondaryResults);
 
   const { isLoading } = useContext(TestCtx);
+  const themeCtx = useContext(ThemeCtx);
+
+  const theme = themeCtx.theme === "light" ? classes.light : classes.dark;
 
   let netWpm = [{ wpm: 100 }];
   let secondaryResults = [
@@ -26,7 +30,7 @@ function Results() {
       {isLoading && <Loader />}
 
       {!isLoading && secondaryResults.length > 0 && (
-        <div className={classes.wrapper}>
+        <div className={theme}>
           <div className={classes["main-data-wrapper"]}>
             <div className={classes["main-data"]}>
               <div>
