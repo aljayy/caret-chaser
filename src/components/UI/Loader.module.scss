@@ -1,0 +1,33 @@
+@import "../../variables.module";
+
+.loader {
+  position: absolute;
+  // top: 20rem;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 5rem;
+  height: 5rem;
+  border: 4px solid transparent;
+  border-radius: 50%;
+  animation: spinner 1s infinite;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.light {
+  border-top: 4px solid $lightmode-correct;
+}
+
+.dark {
+  border-top: 4px solid $darkmode-incorrect;
+}
