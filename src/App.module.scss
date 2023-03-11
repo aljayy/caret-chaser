@@ -20,10 +20,10 @@ body {
 
 .light {
   background-color: $lightmode-bg;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .dark {
   background-color: $darkmode-bg;
-  height: 100vh;
+  min-height: 100vh;
 }
