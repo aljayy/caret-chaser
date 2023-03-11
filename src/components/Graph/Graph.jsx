@@ -22,7 +22,7 @@ ChartJS.register(
   Legend
 );
 
-const labels = [
+const data = [
   { seconds: 1, wpm: 80 },
   { seconds: 2, wpm: 76 },
   { seconds: 3, wpm: 78 },
@@ -61,14 +61,15 @@ const options = {
     x: {
       title: {
         display: true,
-        text: "Seconds",
+        text: "sec",
       },
     },
     y: {
       title: {
         display: true,
-        text: "WPM",
+        text: "wpm",
       },
+      min: 0,
     },
   },
   plugins: {
@@ -78,19 +79,18 @@ const options = {
   },
 };
 
-let data = {
-  labels: labels.map((data) => data.seconds),
-  datasets: [
-    {
-      data: labels.map((data) => data.wpm),
-      borderColor: "#ff6700",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-  ],
-};
-
 function Graph() {
-  return <Line data={data} options={options} className={classes.graph} />;
+  let results = {
+    labels: data.map((data) => data.seconds),
+    datasets: [
+      {
+        data: data.map((data) => data.wpm),
+        borderColor: "#080909",
+        pointBackgroundColor: "#99947f",
+      },
+    ],
+  };
+  return <Line data={results} options={options} className={classes.graph} />;
 }
 
 export default Graph;
