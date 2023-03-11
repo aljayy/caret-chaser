@@ -5,8 +5,9 @@ const TestCtx = React.createContext({
   passageTop: 0,
   caretLeft: 0.5,
   caretTop: 1,
+  isLoading: false,
   isTyping: false,
-  netWpm: "",
+  netWpm: [],
   passageRef: "",
   secondaryResults: [],
   calculateResults: () => {},
@@ -18,13 +19,15 @@ export function TestCtxProvider({ children }) {
   const [caretLeft, setCaretLeft] = useState(0.5);
   const [caretTop, setCaretTop] = useState(1);
   const [currentPosition, setCurrentPosition] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const [letterIndex, setLetterIndex] = useState(0);
+  const [netWpm, setNetWpm] = useState([]);
   const [passageArray, setPassageArray] = useState([]);
   const [passageTop, setPassageTop] = useState(0);
-  const [wordIndex, setWordIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(false);
-  const [netWpm, setNetWpm] = useState([]);
   const [secondaryResults, setSecondaryResults] = useState([]);
+  const [timeLimit, setTimeLimit] = useState(15);
+  const [wordIndex, setWordIndex] = useState(0);
   const passageRef = useRef(null);
 
   const retrievePassage = useCallback(async () => {
@@ -163,6 +166,7 @@ export function TestCtxProvider({ children }) {
   }
 
   const calculateResults = useCallback(() => {
+    setIsLoading(true);
     let correctChars =
       passageArray.flatMap((word) => {
         return word.filter((letter) => {
@@ -192,7 +196,7 @@ export function TestCtxProvider({ children }) {
 
     let totalChars = correctChars + incorrectChars;
     let accuracy = Math.round((correctChars / totalChars) * 100);
-    let gwpm = Math.round(totalChars / 5 / (30 / 60));
+    let gwpm = Math.round(totalChars / 5 / (timeLimit / 60));
     let charsData = {
       incorrect: incorrectChars,
       correct: correctChars,
@@ -206,6 +210,7 @@ export function TestCtxProvider({ children }) {
         charsData,
       },
     ]);
+    setIsLoading(false);
   }, [passageArray]);
 
   return (
@@ -216,6 +221,7 @@ export function TestCtxProvider({ children }) {
         caretLeft,
         caretTop,
         checkLetter,
+        isLoading,
         isTyping,
         netWpm,
         passageArray,
