@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import ThemeCtx from "../../context/themectx";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,38 +23,51 @@ ChartJS.register(
   Legend
 );
 
-const options = {
-  responsive: true,
-  scales: {
-    x: {
-      title: {
-        display: true,
-        text: "sec",
-      },
-    },
-    y: {
-      title: {
-        display: true,
-        text: "wpm",
-      },
-      min: 0,
-    },
-  },
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-};
-
 function Graph({ data }) {
+  const themeCtx = useContext(ThemeCtx);
+
+  const lineTheme =
+    themeCtx.theme === "light"
+      ? { borderColor: "#080909", pointBackgroundColor: "#99947f" }
+      : { borderColor: "#a1a1a1", pointBackgroundColor: "#383e42" };
+
+  const gridTheme =
+    themeCtx.theme === "light"
+      ? { grid: { color: "#d3cfc1" } }
+      : { grid: { color: "#383e42" } };
+
+  const options = {
+    responsive: true,
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "sec",
+        },
+        ...gridTheme,
+      },
+      y: {
+        title: {
+          display: true,
+          text: "wpm",
+        },
+        ...gridTheme,
+        min: 0,
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+
   let results = {
     labels: data.map((data) => data.seconds),
     datasets: [
       {
         data: data.map((data) => data.wpm),
-        borderColor: "#080909",
-        pointBackgroundColor: "#99947f",
+        ...lineTheme,
       },
     ],
   };
