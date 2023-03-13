@@ -2,6 +2,7 @@ import { useEffect, useContext } from "react";
 import TestCtx from "../../context/testctx";
 import ThemeCtx from "../../context/themectx";
 import Caret from "../Caret/Caret";
+import MobileTestSettings from "../TestSettings/MobileTestSettings/MobileTestSettings";
 import Timer from "../UI/Timer";
 import classes from "./Passage.module.scss";
 
@@ -18,6 +19,7 @@ function Passage() {
 
   return (
     <>
+      <MobileTestSettings />
       <Timer />
       <div className={`${classes["test-wrapper"]} ${theme}`}>
         <Caret />
