@@ -1,8 +1,22 @@
+@import "../../variables.module";
+
 .timer {
   text-align: center;
   margin: 3rem 0 2rem 0;
 
   p {
     font-size: 2.4rem;
+  }
+}
+
+.light {
+  p {
+    color: $lightmode-correct;
+  }
+}
+
+.dark {
+  p {
+    color: $darkmode-misc-text;
   }
 }

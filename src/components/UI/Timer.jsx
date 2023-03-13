@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TestCtx from "../../context/testctx";
+import ThemeCtx from "../../context/themectx";
 import classes from "./Timer.module.scss";
 
 function Timer() {
   const [timer, setTimer] = useState(15);
   const [seconds, setSeconds] = useState(1);
   const { isTyping, calculateNetWPM, setIsTyping } = useContext(TestCtx);
+  const themeCtx = useContext(ThemeCtx);
   const navigate = useNavigate();
+
+  const theme = themeCtx.theme === "light" ? classes.light : classes.dark;
 
   useEffect(() => {
     if (timer === 0) {
@@ -29,7 +33,7 @@ function Timer() {
   }, [timer, isTyping]);
 
   return (
-    <div className={classes.timer}>
+    <div className={`${classes.timer} ${theme}`}>
       <p>{timer}</p>
     </div>
   );
