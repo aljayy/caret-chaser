@@ -1,30 +1,22 @@
 import React, { useContext, useEffect } from "react";
 import TestCtx from "../../context/testctx";
 import ThemeCtx from "../../context/themectx";
+import Graph from "../../components/Graph/Graph";
 import Loader from "../../components/UI/Loader";
 import classes from "./Results.module.scss";
 
 function Results() {
-  // const { calculateResults, secondaryResults, netWpm, isLoading } =
-  //   useContext(TestCtx);
+  const { calculateResults, secondaryResults, netWpm, isLoading } =
+    useContext(TestCtx);
 
-  // useEffect(() => {
-  //   calculateResults();
-  // }, [calculateResults]);
+  useEffect(() => {
+    calculateResults();
+  }, [calculateResults]);
 
-  // console.log(secondaryResults);
-
-  const { isLoading } = useContext(TestCtx);
   const themeCtx = useContext(ThemeCtx);
 
   const theme = themeCtx.theme === "light" ? classes.light : classes.dark;
 
-  let netWpm = [{ wpm: 100 }];
-  let secondaryResults = [
-    {
-      accuracy: 99,
-    },
-  ];
   return (
     <>
       {isLoading && <Loader />}
@@ -42,23 +34,26 @@ function Results() {
                 <p>{secondaryResults[0].accuracy}</p>
               </div>
             </div>
-            <div className={classes["main-data-graph"]}>GRAPH</div>
+            <Graph data={netWpm} />
           </div>
           <div className={classes["secondary-data-wrapper"]}>
             <div>
               <h3>gwpm</h3>
-              <p>104</p>
+              <p>{secondaryResults[0].gwpm}</p>
             </div>
             <div>
               <h3>characters</h3>
               <p>
-                <span>correct:</span> 99
+                <span>correct:</span>
+                {secondaryResults[0].charsData.correct}
               </p>
               <p>
-                <span>incorrect:</span> 1
+                <span>incorrect:</span>
+                {secondaryResults[0].charsData.incorrect}
               </p>
               <p>
-                <span>total:</span> 100
+                <span>total:</span>
+                {secondaryResults[0].charsData.total}
               </p>
             </div>
           </div>
