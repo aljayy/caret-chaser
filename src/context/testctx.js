@@ -13,6 +13,7 @@ const TestCtx = React.createContext({
   calculateResults: () => {},
   checkLetter: () => {},
   retrievePassage: () => {},
+  setIsTyping: () => {},
 });
 
 export function TestCtxProvider({ children }) {
@@ -229,6 +230,7 @@ export function TestCtxProvider({ children }) {
         passageTop,
         retrievePassage,
         secondaryResults,
+        setIsTyping,
       }}
     >
       {children}

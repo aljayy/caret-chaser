@@ -4,14 +4,15 @@ import TestCtx from "../../context/testctx";
 import classes from "./Timer.module.scss";
 
 function Timer() {
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(15);
   const [seconds, setSeconds] = useState(1);
-  const { isTyping, calculateNetWPM } = useContext(TestCtx);
+  const { isTyping, calculateNetWPM, setIsTyping } = useContext(TestCtx);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (timer === 0) {
       navigate("/results");
+      setIsTyping(false);
     }
 
     if (timer > 0 && isTyping) {
