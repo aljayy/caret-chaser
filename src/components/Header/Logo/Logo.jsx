@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import ThemeCtx from "../../../context/themectx";
 import lightLogo from "../../../assets/cclightlogo.svg";
 import darkLogo from "../../../assets/ccdarklogo.svg";
@@ -10,9 +11,9 @@ function Logo() {
   const logo = theme === "light" ? lightLogo : darkLogo;
 
   return (
-    <div className={classes["logo-wrapper"]}>
+    <Link to={"/"} className={classes["logo-wrapper"]}>
       <img src={logo} alt="Logo" />
-    </div>
+    </Link>
   );
 }
 
