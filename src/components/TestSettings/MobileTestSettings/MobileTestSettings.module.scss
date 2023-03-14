@@ -39,7 +39,6 @@
   z-index: 2;
 
   .mobile-menu {
-    background-color: $lightmode-bg;
     border-radius: 1rem;
     margin: 12rem 3rem 0 3rem;
     padding: 2rem 0;
@@ -48,9 +47,9 @@
       margin: 0 1.5rem;
 
       li {
-        background-color: $lightmode-secondary-bg;
+        // background-color: $lightmode-secondary-bg;
         border-radius: 1rem;
-        color: $lightmode-misc-text;
+        // color: $lightmode-misc-text;
         font-size: 1.8rem;
         height: 4rem;
         margin-top: 2rem;
@@ -69,6 +68,32 @@
       }
     }
   }
+}
+
+.menu-light {
+  background-color: $lightmode-bg;
+}
+
+.menu-dark {
+  background-color: $darkmode-secondary-bg;
+}
+
+.category-active-light {
+  background-color: $darkmode-incorrect;
+  color: $lightmode-correct;
+}
+
+.category-inactive-light {
+  background-color: $lightmode-secondary-bg;
+}
+
+.category-active-dark {
+  background-color: $darkmode-misc-text;
+  color: $darkmode-bg;
+}
+
+.category-inactive-dark {
+  background-color: $darkmode-correct;
 }
 
 .light {
