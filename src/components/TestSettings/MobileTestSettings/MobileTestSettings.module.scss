@@ -29,6 +29,48 @@
   }
 }
 
+.overlay {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 2;
+
+  .mobile-menu {
+    background-color: $lightmode-bg;
+    border-radius: 1rem;
+    margin: 12rem 3rem 0 3rem;
+    padding: 2rem 0;
+
+    ul {
+      margin: 0 1.5rem;
+
+      li {
+        background-color: $lightmode-secondary-bg;
+        border-radius: 1rem;
+        color: $lightmode-misc-text;
+        font-size: 1.8rem;
+        height: 4rem;
+        margin-top: 2rem;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+
+      &:nth-child(2) {
+        margin-top: 6rem;
+      }
+    }
+  }
+}
+
 .light {
   background-color: $lightmode-secondary-bg;
 
