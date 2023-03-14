@@ -6,14 +6,12 @@ import classes from "./MobileTestSettings.module.scss";
 
 function MobileTestSettings() {
   const themeCtx = useContext(ThemeCtx);
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
 
   const theme = themeCtx.theme === "light" ? classes.light : classes.dark;
   const gear = themeCtx.theme === "light" ? lightgear : darkgear;
 
   function toggleMenu(e) {
-    e.bubbles = false;
-    console.log(e);
     setShowMenu((prev) => !prev);
   }
 
@@ -32,7 +30,10 @@ function MobileTestSettings() {
       )}
       {showMenu && (
         <div className={classes.overlay} onClick={toggleMenu}>
-          <menu className={classes["mobile-menu"]}>
+          <menu
+            className={classes["mobile-menu"]}
+            onClick={(e) => e.stopPropagation()}
+          >
             <ul>
               <li>test</li>
               <li>quotes</li>
