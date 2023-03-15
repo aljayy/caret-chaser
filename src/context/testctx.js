@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 const TestCtx = React.createContext({
   passageArray: [],
@@ -42,6 +42,10 @@ export function TestCtxProvider({ children }) {
     ],
   ]);
   const passageRef = useRef(null);
+
+  useEffect(() => {
+    setTimeLimit(settings[1].find((option) => option.active).settings);
+  }, [settings]);
 
   const retrievePassage = useCallback(async () => {
     let response = await fetch(
