@@ -1,9 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Philosopher:wght@400;700&family=Roboto+Mono&display=swap");
 
+$main-font: "Roboto Mono", sans-serif;
+
 $lightmode-bg: #eeebe2;
 $lightmode-secondary-bg: #d3cfc1;
 $lightmode-correct: #080909;
 $lightmode-incorrect: #ba3333;
 $lightmode-misc-text: #99947f;
 
-$main-font: "Roboto Mono", sans-serif;
+$darkmode-bg: #010203;
+$darkmode-secondary-bg: #121212;
+$darkmode-correct: #383e42;
+$darkmode-incorrect: #ff6700;
+$darkmode-misc-text: #a1a1a1;
