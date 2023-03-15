@@ -5,13 +5,18 @@ import ThemeCtx from "../../context/themectx";
 import classes from "./Timer.module.scss";
 
 function Timer() {
-  const [timer, setTimer] = useState(15);
+  const { isTyping, calculateNetWPM, setIsTyping, timeLimit } =
+    useContext(TestCtx);
+  const [timer, setTimer] = useState();
   const [seconds, setSeconds] = useState(1);
-  const { isTyping, calculateNetWPM, setIsTyping } = useContext(TestCtx);
   const themeCtx = useContext(ThemeCtx);
   const navigate = useNavigate();
 
   const theme = themeCtx.theme === "light" ? classes.light : classes.dark;
+
+  useEffect(() => {
+    setTimer(timeLimit);
+  }, [timeLimit]);
 
   useEffect(() => {
     if (timer === 0) {
