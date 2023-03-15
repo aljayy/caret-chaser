@@ -10,10 +10,14 @@ const TestCtx = React.createContext({
   netWpm: [],
   passageRef: "",
   secondaryResults: [],
+  settings: [],
+  timeLimit: 0,
   calculateResults: () => {},
   checkLetter: () => {},
   retrievePassage: () => {},
   setIsTyping: () => {},
+  setSettings: () => {},
+  setTimeLimit: () => {},
 });
 
 export function TestCtxProvider({ children }) {
@@ -29,6 +33,14 @@ export function TestCtxProvider({ children }) {
   const [secondaryResults, setSecondaryResults] = useState([]);
   const [timeLimit, setTimeLimit] = useState(15);
   const [wordIndex, setWordIndex] = useState(0);
+  const [settings, setSettings] = useState([
+    [{ test: "timed", active: true }],
+    [
+      { settings: 15, active: true },
+      { settings: 30, active: false },
+      { settings: 60, active: false },
+    ],
+  ]);
   const passageRef = useRef(null);
 
   const retrievePassage = useCallback(async () => {
@@ -231,6 +243,10 @@ export function TestCtxProvider({ children }) {
         retrievePassage,
         secondaryResults,
         setIsTyping,
+        setTimeLimit,
+        settings,
+        setSettings,
+        timeLimit,
       }}
     >
       {children}

@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import TestCtx from "../../../context/testctx";
 import ThemeCtx from "../../../context/themectx";
 import lightgear from "../../../assets/lightsettingsicon.svg";
 import darkgear from "../../../assets/darksettingsicon.svg";
@@ -6,18 +7,8 @@ import classes from "./MobileTestSettings.module.scss";
 
 function MobileTestSettings() {
   const themeCtx = useContext(ThemeCtx);
+  const { settings, setSettings } = useContext(TestCtx);
   const [showMenu, setShowMenu] = useState(true);
-  const [settings, setSettings] = useState([
-    [
-      { test: "test", active: true },
-      { test: "quotes", active: false },
-    ],
-    [
-      { settings: 15, active: true },
-      { settings: 30, active: false },
-      { settings: 60, active: false },
-    ],
-  ]);
 
   const theme = themeCtx.theme === "light" ? classes.light : classes.dark;
   const gear = themeCtx.theme === "light" ? lightgear : darkgear;
@@ -32,14 +23,13 @@ function MobileTestSettings() {
       ? classes["category-inactive-dark"]
       : classes["category-inactive-light"];
 
-  function toggleMenu(e) {
+  function toggleMenu() {
     setShowMenu((prev) => !prev);
   }
 
   function selectSettings(setState, array, i) {
     setState((prev) => {
       let updated = [...prev];
-      console.log(updated[array]);
       updated[array].map((category, index) => {
         if (index === i) return (category.active = true);
         else return (category.active = false);
